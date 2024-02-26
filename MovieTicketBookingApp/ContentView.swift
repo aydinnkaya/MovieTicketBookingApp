@@ -2,23 +2,48 @@
 //  ContentView.swift
 //  MovieTicketBookingApp
 //
-//  Created by Aydın KAYA on 26.02.2024.
+//  Created by Aydın KAYA on 16.02.2024.
 //
 
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var currentTab : Tab = .home
+    
+    init() {
+        UITabBar.appearance().isHidden = true
+    }
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            VStack(spacing: 0) {
+                TabView(selection: $currentTab) {
+                    HomeView()
+                        .tag(Tab.home)
+                    
+                    Text("Location")
+                        .tag(Tab.location)
+                    
+                    TicketView()
+                        .tag(Tab.ticket)
+                    
+                    Text("Category")
+                        .tag(Tab.category)
+                    
+                    Text("Profile")
+                        .tag(Tab.profile)
+                }
+                
+                CustomTabBar(currentTab: $currentTab)
+            }
+           .ignoresSafeArea(.keyboard)
         }
-        .padding()
     }
 }
 
-#Preview {
-    ContentView()
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
